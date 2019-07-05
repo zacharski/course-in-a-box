@@ -1,6 +1,6 @@
 title: Backend Developer Course
 description: Build Your Very Own Open Course
-modules: [tutorial, resources, references]
+modules: [tutorial, resources, references, session]
 signups:
  - name: Geert Hofman
    image: https://media.licdn.com/media/p/3/000/1b0/2c9/2daad0c.jpg
