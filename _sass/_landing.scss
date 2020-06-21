@@ -11,6 +11,7 @@ section {
 		border-color: $gray-lighter;
 	}
 }
+
 .dark-section{
 	background-color: $gray-lighter;
 
@@ -18,14 +19,17 @@ section {
 		border-color: $white;
 	}
 }
+
 .jumbotron {
 	background: $jumbotron-color;
-	background-position: bottom center;
-	background-repeat: no-repeat;
-	background-image: url('../img/#{$jumbotron-image}');
-	background-size: auto;
+	background-position: top center;
+	background-repeat: repeat, no-repeat;
+	background-image: url(../img/header-overlay.png), url('../img/#{$jumbotron-image}');
+	background-size: auto, cover;
 	color: $white;
+  height: 40vh;
 	position: relative;
+  margin: 0;
 
 	a {
 		color: #fcfcfc;
@@ -37,6 +41,16 @@ section {
 		border-bottom: none;
 		text-decoration: none;
 	}
+
+  .container {
+    display: table;
+    height: 100%;
+  }
+
+  .jumbo-text {
+    display: table-cell;
+    vertical-align: middle;
+  }
 
 }
 

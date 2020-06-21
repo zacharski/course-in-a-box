@@ -1,5 +1,5 @@
 # basic configuration
-baseurl:  /machine-learning
+baseurl: /machine-learning
 markdown: kramdown
 permalink: /:categories/:title/
 
@@ -12,8 +12,7 @@ p2pu_ga_tracking_code: UA-55722824-1
 exclude: [Gemfile, Gemfile.lock, README.md]
 
 defaults:
-  -
-    scope:
+  - scope:
       path: "modules" # an empty string here means all files in the project
     values:
       layout: "course_page"
@@ -32,4 +31,3 @@ prose:
 # this is a hex value http://www.w3schools.com/tags/ref_colorpicker.asp
 jumbotron_color: "#05C6B4"
 jumbotron_background_image: "banner7.jpg"
-jumbotron_image: "box-icon.png"
