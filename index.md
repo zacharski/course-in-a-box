@@ -1,28 +1,48 @@
 ---
 layout: index
 published: true
+extra_js:
+  - /js/moment.min.js
+  - https://learningcircles.p2pu.org/en/studygroups/?course_id=176&callback=renderCircles
 ---
 
-## Create your own online course (and keep it)
+<center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vSSB9Cr7huc" frameborder="0" allowfullscreen></iframe></center>
 
-Course in a Box is simple, open source tool to help you create your very own online course. It is designed to minimize the amount of time you need to spend fumbling around with technology, allowing you to focus on bringing together the resources, activities, and lessons that you want to share with the world.
+### Welcome to the Course
 
-By default, your course will be hosted on [Github](https://www.github.com), a popular development platform that allows for collaborative drafting, version control, and easy dissemination of your course. Best of all, hosting a course on Github is **free**!
+This course is designed to help you learn the necessary skills to develop machine learning systems. It emphasizes deep learning. I have been developing machine learning systems (speech recognition and machine translation systems) for over 25 years and have been helping others learn this material for over 10. I believe this online course to be an effective and fun way to learn these skills. In this course you will learn to build machine learning applications that can solve real world problems. While it may take 10,000 hours of training to become expert in this area, you will find that with a small investment of time you can develop skills that you can immediately use to build useful applications.
 
-So what does it look like? Recently, Creative Commons and the Open University used in Course in a Box to create [a course about Open Educational Resources](http://www.exploerercourse.org/). The Children’s Museum in Pittsburgh created [a course about designing maker spaces in libraries and museums](http://p2pu.github.io/makingandlearning/).
+### Intended Audience
 
-Using Course in a Box is completely free. However, if you’d like to hire us to help you set things up and give feedback along the way, we are available to do that too. Just reach out to us a thepeople[at]p2pu[dot]org.
+This course is intended for people with some experience with Python. In addition, some knowledge of the Numpy and Pandas Python libraries will help. If you have strong skills in another programming language you will be fine. If you are a complete beginner, this course will be doable but may be challenging.
 
-## Not just technology and content
+### Modules
 
-In Deschooling Society (1971), Ivan Illich wrote that “technology is available to develop either independence and learning or bureaucracy and teaching”. So much of education technology that is developed today is geared towards the latter. Think about every learning management system you’ve ever engaged with, or the promises of smart tutors and personalized algorithms that will tell people exactly what to learn. More often than not, these tools reinforce the role of an expert or an administrator more than they empower individual learners to pursue their own interests.
+On the menu bar at the top of this page you will see that the course consists of a number of modules. These modules are designed to introduce you to the key elements of backend development and introduce you to the tools you will need to successfully write backend applications. The only way to proficient with this material is to practice and as such the modules are designed to encourage you in your productive wrangling and applying machine learning techniques to different datasets.
 
-At P2PU, we believe that effective learning is not going to come from the top down, regardless of how smart the teacher or refined the algorithm. We also believe that you don’t need to spend $100,000 to create a good online course! Taking time to frame questions in new ways and reaching out to communities who might benefit from your course is way more important that filming lessons in 4K video in a fancy video studio.
+### What you'll learn
 
-## Reach new audiences
+In addition to gaining basic fluency with Python, Numpy and Pandas you will learn the following.
 
-Online courses take a big step forwards in the sharing of knowledge around the world. However, your course is only ever as good as the people it reaches. To help reach new audiences with online courses, P2PU developed learning circles: face-to-face study groups for people who want to take online courses together, in local libraries or community spaces.
+#### Core machine learning principles
 
-Once you create a course, you can add it to P2PU’s learning circle [course page](http://p2pu.org/en/courses), a growing database of online courses that people are using to facilitate learning circles around the world. You can also check out [https://www.p2pu.org/en/facilitate/](https://www.p2pu.org/en/facilitate/) for information on running your own learning circles.
+You will learn how to
 
+- apply the machine learning (ML) pipeline to your project
+- run machine learning jobs on a Graphics Processor (GPU) using Jupyter Notebooks, which are commonly used in industry.
+- decide on which ML algorithm to use for your problem.
+- reduce the dimensionality of a dataset.
+- develop different linear models to solve classification problems.
 
+#### Javascript and node.js
+
+- basic fluency with Javascript
+- skills withasynchronous I/O
+- connecting to a database
+- developing a real-time web application backend
+
+#### Deployment
+
+- How to deploy to a server
+- How to set up a reverse proxy server
