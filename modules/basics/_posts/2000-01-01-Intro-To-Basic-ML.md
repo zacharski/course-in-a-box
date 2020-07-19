@@ -1,4 +1,4 @@
-## Module 1: Introduction to SQL
+## Module 1: Introduction to the Basics
 
 
 <br/>

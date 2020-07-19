@@ -7,7 +7,7 @@ extra_js:
 ---
 
 <center>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/vSSB9Cr7huc" frameborder="0" allowfullscreen></iframe></center>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zYH2RGTEf9Y" frameborder="0" allowfullscreen></iframe></center>
 
 ### Welcome to the Course
 
@@ -19,7 +19,7 @@ This course is intended for people with some experience with Python. In addition
 
 ### Modules
 
-On the menu bar at the top of this page you will see that the course consists of a number of modules. These modules are designed to introduce you to the key elements of backend development and introduce you to the tools you will need to successfully write backend applications. The only way to proficient with this material is to practice and as such the modules are designed to encourage you in your productive wrangling and applying machine learning techniques to different datasets.
+On the menu bar at the top of this page you will see that the course consists of a number of modules. These modules are designed to introduce you to the key elements of machine learning and introduce you to the tools you will need to successfully create applications that use machine learning techniques. The only way to proficient with this material is to practice and as such the modules are designed to encourage you in your productive wrangling and applying machine learning techniques to different datasets.
 
 ### What you'll learn
 
@@ -29,20 +29,31 @@ In addition to gaining basic fluency with Python, Numpy and Pandas you will lear
 
 You will learn how to
 
-- apply the machine learning (ML) pipeline to your project
-- run machine learning jobs on a Graphics Processor (GPU) using Jupyter Notebooks, which are commonly used in industry.
-- decide on which ML algorithm to use for your problem.
-- reduce the dimensionality of a dataset.
-- develop different linear models to solve classification problems.
+- architect a scalable ML pipeline
+- run ML jobs on a GPU with Jupyter notebooks
+- evaluate different ML models
+- determine the best ML algorithm to use for an application.
+- reduce the dimensionality of a dataset
+- develop different linear models to solve classification problems
+- communicate effectively about ML applications (terminology)
 
-#### Javascript and node.js
+#### XGBoost
 
-- basic fluency with Javascript
-- skills withasynchronous I/O
-- connecting to a database
-- developing a real-time web application backend
+You will learn how to
 
-#### Deployment
+- apply decision tree algorithms to create a classifier.
+- use random forest techniques
+- combine a number of weak classifiers into a strong one by using boosting.
+- effectively use the XGBoost algorithm
+
+
+#### Deep Learning
+You will learn 
 
 - How to deploy to a server
 - How to set up a reverse proxy server
+-how to build a simple deep learning  system for image classification.
+- the basic mathematical foundations of deep learning. 
+- how to build CNNs for computer vision.
+-how to build deep learning models to handle text.
+
