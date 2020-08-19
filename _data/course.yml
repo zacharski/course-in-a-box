@@ -1,4 +1,4 @@
 title: Machine Learning Fundamentals
 description: Machine Learning Fundamentals
 modules: [tutorial, resources, references, session]
-modules: ["basics", "boosting", "deep learning", "sql2 module", "nextjs module"]
+modules: ["basics", "boosting", "deep learning"]

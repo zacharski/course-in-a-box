@@ -8,7 +8,7 @@ In this video we continue our exploration of writing queries involving a single 
 
 ### Intro to SciKit Learn
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/B0i8yBkkM00" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/B8NJI1ACqQU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 The dataset we are going to use is on how the U.S. Congress voted on different bills and we want to see if we can predict what party they belong to (democrat or republican) based on those votes.
 
