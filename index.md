@@ -46,14 +46,12 @@ You will learn how to
 - combine a number of weak classifiers into a strong one by using boosting.
 - effectively use the XGBoost algorithm
 
-
 #### Deep Learning
-You will learn 
 
-- How to deploy to a server
-- How to set up a reverse proxy server
--how to build a simple deep learning  system for image classification.
-- the basic mathematical foundations of deep learning. 
+You will learn
+
+-how to build a simple deep learning system for image classification.
+
+- the basic mathematical foundations of deep learning.
 - how to build CNNs for computer vision.
--how to build deep learning models to handle text.
-
+  -how to build deep learning models to handle text.

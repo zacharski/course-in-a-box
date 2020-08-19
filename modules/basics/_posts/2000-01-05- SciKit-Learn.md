@@ -1,188 +1,248 @@
-## Querying an SQL Database Part 2
+## Introduction to SciKit Learn using kNN
 
+### Introduction to classification
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/jKBjgVtzElg" frameborder="0" allowfullscreen></iframe>
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/B0i8yBkkM00" frameborder="0" allowfullscreen></iframe>
 
 In this video we continue our exploration of writing queries involving a single table.
 
-### files used in this video
-To follow along, you will need to download and install 2 sql files:
+### Intro to SciKit Learn
 
-* [tomato.sql](https://raw.githubusercontent.com/zacharski/devCourse/master/sqlFiles/tomato.sql)
-* [world.sql](https://raw.githubusercontent.com/zacharski/devCourse/master/sqlFiles/world.sql)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/B0i8yBkkM00" frameborder="0" allowfullscreen></iframe>
 
-## Summary
+The dataset we are going to use is on how the U.S. Congress voted on different bills and we want to see if we can predict what party they belong to (democrat or republican) based on those votes.
 
-1. `DISTINCT` - getting unique entries
-2. `ORDER BY {ASC/DESC} -  arrange results in a particular order 
-2. `LIMIT` - limit the number of rows returned. (for example., in combination with the above -- the top ten cities in terms of population. 
-3. `AVG`, `COUNT`, ETC -- summary statistics like average, minimum, max values. (for example, the average tomato rating, or count things like how many movies Robert Downey was in.)
-4. `GROUP BY` -- group rows in order to perform some summary statistic (for example, what is the average tomato rating of each actor in our database -- so we are grouping by actor.)
-5. `AS` - Column aliases -- ways of renaming the columns of a result. 
-6. `IN`, `BETWEEN`, `NOT`  -- syntactic sugar. these don't add to the expressive power but help make our queries simpler.
+FIrst, let's load in the data
 
+```
+import pandas as pd
+from pandas import DataFrame, Series
 
-### ORDER BY
+```
 
-#### Generate an alphabetical list of movies in our database
+In the data file there are no column names so we need to add them
 
+```
+column_names = ['party', 'handicapped_infants', 'water', 'budget',
+                'physician_fee_freeze', 'el_salvador_aid',
+                'religious_groups_in_schools', 'anti_satellite_test_ban',
+                'aid_to_nicaraguan_contras', 'mx_missile', 'immigration',
+                'synfuels_corporation_cutback', 'education_spending',
+                'superfund_right_to_sue', 'crime', 'duty_free_exports',
+                'south_africa_exports']
+len(column_names)
 
+```
 
+    17
 
-	SELECT DISTINCT movie FROM actors ORDER BY movie;
+and now we can actually load in the data and pass in those column names.
 
-#### Generate an alphabetical list of actors in our database
+```
+votes = pd.read_csv('https://raw.githubusercontent.com/zacharski/ml-class/master/data/house_votes_2.csv', names= column_names )
+```
 
+Let's take a look at the data...
 
-	SELECT DISTINCT firstname, lastname FROM actors ORDER BY lastname, firstname;
+```
+votes
+```
 
+You should see a sample of the dataset.
 
-####  All cities in the US ordered by population
+### How to load in a zip file
 
+Suppose the data wasn't in a csv file, but was contained in a zip file. How do we load in the data?
 
+First, let's get the zip file to our Google Colab machine by using the Linux command `wget`. We can execute an arbitrary Linux command by starting the code cell with a bang `!`
 
-	SELECT  name, population FROM city WHERE countrycode = 'USA' 
-	ORDER BY population DESC;
+```
+!wget https://raw.githubusercontent.com/zacharski/ml-class/master/data/house_votes.zip
+```
 
+    --2020-08-04 15:36:09--  https://raw.githubusercontent.com/zacharski/ml-class/master/data/house_votes.zip
+    Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 151.101.0.133, 151.101.64.133, 151.101.128.133, ...
+    Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|151.101.0.133|:443... connected.
+    HTTP request sent, awaiting response... 200 OK
+    Length: 1115 (1.1K) [application/zip]
+    Saving to: ‘house_votes.zip’
 
+    house_votes.zip     100%[===================>]   1.09K  --.-KB/s    in 0s
 
+    2020-08-04 15:36:10 (29.4 MB/s) - ‘house_votes.zip’ saved [1115/1115]
 
-and for completeness  (ascending order)
+Now let's unzip the file using the Linux command `unzip`
 
+```
+!unzip house_votes.zip
+```
 
-	SELECT  name, population FROM city WHERE countrycode = 'USA' 
-	ORDER BY population ASC;
+    Archive:  house_votes.zip
+      inflating: house_votes_2.csv
 
+And see what is in our current directory
 
+```
+!ls
+```
 
+    house_votes_2.csv  house_votes.zip  sample_data
 
-### LIMIT
+Now we can load that local file into pandas.
 
+```
 
-#### Top 10 cities in the US based on population
+votes2 = pd.read_csv('house_votes_2.csv', names= column_name)
 
-	SELECT  name, population FROM city WHERE countrycode = 'USA' 
-	ORDER BY population DESC LIMIT 10;
+```
 
-	
-	
-#### Top 5 movies based on t rating
+That was a bit of an aside, but it is a useful thing to know.
 
-	SELECT DISTINCT movie, trating FROM actors
-	ORDER BY trating DESC LIMIT 5;
+### divide the dataset
 
-#### ## SLIDE longest movie in our database?
+Okay, we have `votes` the DataFrame with the house vote data. We separate that so 80% goes into a training set and 20% goes into the testing set.
 
-	SELECT movie, runtime FROM actors WHERE runtime IS NOT NULL
-	ORDER BY runtime DESC LIMIT 1;
+```
+from sklearn.model_selection import train_test_split
+votes_train, votes_test = train_test_split(votes, test_size = 0.2)
+votes_train
+```
 
+## Getting labels and features
 
-## Summary Statistics
+Next we want to divide the labels -- what we want to predict, from the features -- what we are going to use to make the prediction
 
-### COUNT
+```
+fColumns = list(votes.columns)
+fColumns.remove('party')
+votes_train_features = votes_train[fColumns]
+votes_test_features = votes_test[fColumns]
+votes_train_labels = votes_train[['party']]
+votes_test_labels = votes_test[['party']]
+votes_test_labels
+```
 
-#### How many cities are there in our datebase?
+# build a Euclidean kNN classifier with k=3
 
-	SELECT COUNT(*) FROM city';
+Finally, we are going to build our kNN classifier. We will use Euclidean distance and a k of 3.
 
-#### How many cities are there in the US?
+```
+from sklearn.neighbors import KNeighborsClassifier
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.get_params()
+```
 
-	SELECT COUNT(*) FROM city WHERE countrycode = 'USA';
+    {'algorithm': 'auto',
+     'leaf_size': 30,
+     'metric': 'minkowski',
+     'metric_params': None,
+     'n_jobs': None,
+     'n_neighbors': 3,
+     'p': 2,
+     'weights': 'uniform'}
 
+# Train the classifier using fit
 
-### AVG 
-#### What is the average tomato rating of movies with Scarlet Johansson?
+We will train the classifier on our training dataset
 
-	SELECT AVG(trating) FROM actors WHERE firstname = 'Scarlet' 
-	AND lastname = 'Johansson';
+```
+knn.fit(votes_train_features, votes_train_labels)
+```
 
-#### What was the highest tomato rating for a movie that Robert Downey was in?
+    /usr/local/lib/python3.6/dist-packages/ipykernel_launcher.py:1: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples, ), for example using ravel().
+      """Entry point for launching an IPython kernel.
 
-	SELECT MAX(trating) FROM actors WHERE firstname = 'Robert' 
-	AND lastname = 'Downey';
 
-#### What was the movie with the highest tomato rating that Robert Downey was in?
 
-	SELECT movie, trating FROM actors WHERE firstname = 'Robert' 
-	AND lastname = 'Downey' ORDER BY trating DESC LIMIT 1;
 
 
+    KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
+                         metric_params=None, n_jobs=None, n_neighbors=3, p=2,
+                         weights='uniform')
 
-### GROUP BY
+# now use predict to get the predictions
 
-#### How many cities are there in each state?
+```
+predictions = knn.predict(votes_test_features)
+predictions
+```
 
-	SELECT district, COUNT(name) FROM city WHERE countrycode = 'USA' 
-	GROUP BY district ORDER BY district;
-	
-####  How many movies was each actor in?
+    array(['democrat', 'democrat', 'republican', 'republican', 'republican',
+           'democrat', 'democrat', 'democrat', 'democrat', 'republican',
+           'democrat', 'republican', 'democrat', 'republican', 'republican',
+           'republican', 'republican', 'republican', 'republican',
+           'republican', 'republican', 'democrat', 'republican', 'democrat',
+           'democrat', 'republican', 'democrat', 'democrat', 'democrat',
+           'democrat', 'republican', 'republican', 'republican', 'republican',
+           'democrat', 'democrat', 'democrat', 'democrat', 'democrat',
+           'republican', 'democrat', 'republican', 'republican', 'republican',
+           'democrat', 'republican', 'republican'], dtype=object)
 
-	SELECT firstname, lastname, COUNT(movie) FROM actors 
-	GROUP BY firstname, lastname ORDER BY COUNT(movie) DESC;
-	
+# Nice to know the accuracy
 
+we can use accuracy_score
 
-## SLIDE Syntactic Sugar
+```
+from sklearn.metrics import accuracy_score
+accuracy_score(votes_test_labels, predictions)
+```
 
+    0.9787234042553191
 
-### IN
+## try to improve accuracy
 
+### p or power -- let's make it Manhattan
 
-#### An alphabetical list of cities and their populations that are in Texas, Nevada, and Arizona.
+```
+knn = KNeighborsClassifier(n_neighbors=3, p = 1)
+knn.fit(votes_train_features, votes_train_labels)
+predictions = knn.predict(votes_test_features)
+accuracy_score(votes_test_labels, predictions)
+```
 
-The old way using `OR`:
+    0.9787234042553191
 
-	SELECT name, population FROM city  WHERE district = 'Texas' OR 
-	district = 'Arizona' OR district = 'Nevada' ORDER BY name;
-an alternative
+## how is our prediction just using one votes. How about immigration?
 
-Using `IN`:
+```
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(votes_train[['immigration']], votes_train_labels)
+predictions = knn.predict(votes_test[['immigration']])
+accuracy_score(votes_test_labels, predictions)
+```
 
-	SELECT name, population FROM city WHERE district 
-	IN ('Arizona', 'Texas', 'Nevada') ORDER BY name;
+    0.48936170212765956
 
-### BETWEEN
+Our prediction on whether someone is a Republican or Democrat based on how they voted on an immigration bill was not very accurate.
 
-#### Cities (and their population) in Texas whose populations are between 100,000 and 200,000
+### What about how they voted for aid to Nicaraguan Contras?
 
-The old way using `AND`:
+```
 
-	SELECT name, population FROM city WHERE district = 'Texas' AND population < 200000 
-	AND population > 100000 ORDER BY name;
+```
 
+```
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(votes_train[['aid_to_bicaraguan_contras']], votes_train_labels)
+predictions = knn.predict(votes_test[['aid_to_bicaraguan_contras']])
+accuracy_score(votes_test_labels, predictions)
+```
 
-Using  `between`:
+    0.851063829787234
 
-	SELECT name, population FROM city WHERE district = 'Texas' AND 
-	population BETWEEN 100000 AND 200000 ORDER BY name;
+That accuracy is pretty high.
 
+## finally, k=5
 
+```
+knn = KNeighborsClassifier(n_neighbors=5, p = 2)
+knn.fit(votes_train_features, votes_train_labels)
+predictions = knn.predict(votes_test_features)
+accuracy_score(votes_test_labels, predictions)
+```
 
-### NOT
+    0.9787234042553191
 
-#### How many cities are there in the continental United States?
+```
 
-	SELECT COUNT(*) FROM city WHERE countrycode = 'USA' 
-	AND NOT district IN ('Alaska', 'Hawaii');
-	
-
-## Aliases
-
-#### The top 10 in terms of population cities in the US (the city and state and population)
-We want the names of cities, the state name, and the population in columns named, *city, state* and *population*. 
-
-
-	SELECT name AS city, district AS state,population FROM city WHERE countrycode = 'USA' order by population desc limit 10;
-
-The `AS` is optional
-
-## Escaping Single Quotes
-
-To have a single quote be interpreted as a character rather than a string delimiter use two single quotes.
-
-	SELECT movie FROM actors WHERE movie LIKE '%''%';
-     movie   
-	---------------
- 	King's Speech
-	(1 row)
+```
