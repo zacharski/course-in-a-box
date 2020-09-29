@@ -9,5 +9,3 @@ This module consists of a handful of videos that will help you get started with 
 3. learn how to implement boosting
 4. learn how to use XGBoost
 
-<br/>
-#### The module is forthcoming

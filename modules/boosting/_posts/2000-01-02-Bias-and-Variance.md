@@ -1,0 +1,18 @@
+## Bias and Variance
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/H6qh1WR1FYU" frameborder="0" allowfullscreen></iframe>
+
+
+kNN is a very simple but powerful machine learning algorithm. 
+
+### In this video
+
+* distance formulas
+	* Manhattan distance
+	* Euclidean distance
+	* Minkowski distance
+* normalizing values and the minmax method.
+* kNN algorithm
+
+
+
