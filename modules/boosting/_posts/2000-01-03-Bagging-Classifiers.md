@@ -1,6 +1,6 @@
 # Bagging, Pasting, and Patches
 
-<<iframe width="560" height="315" src="https://www.youtube.com/embed/cr9uSrg5u4I" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cr9uSrg5u4I" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 The basic template for using nearly any bagging method is
 
